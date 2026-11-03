@@ -1,0 +1,85 @@
+{
+  "name": "china-nbs",
+  "version": "0.3.0",
+  "description": "Query China's National Bureau of Statistics data release database with one tool.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "china-nbs": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "smoke": "node --import tsx scripts/smoke.ts",
+    "eval": "node --import tsx scripts/eval.ts",
+    "eval:live": "node --import tsx scripts/eval.ts --live",
+    "coverage": "node --import tsx scripts/coverage-report.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "china",
+    "statistics",
+    "nbs",
+    "national-bureau-of-statistics",
+    "gdp",
+    "cpi",
+    "data",
+    "cli"
+  ],
+  "author": "salt-fishes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salt-fishes/china-nbs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/salt-fishes/china-nbs/issues"
+  },
+  "homepage": "https://github.com/salt-fishes/china-nbs#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "undici": ">=6"
+  },
+  "peerDependenciesMeta": {
+    "undici": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.0",
+    "@types/node": "^24.0.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
