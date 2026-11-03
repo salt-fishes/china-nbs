@@ -1,7 +1,6 @@
 # china-nbs
 
 [![npm](https://img.shields.io/npm/v/china-nbs)](https://www.npmjs.com/package/china-nbs)
-[![CI](https://github.com/salt-fishes/china-nbs/actions/workflows/ci.yml/badge.svg)](https://github.com/salt-fishes/china-nbs/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/china-nbs)](https://github.com/salt-fishes/china-nbs/blob/main/LICENSE)
 
 用**一个 `query()` 入口**查询中国国家统计局数据发布库的 Node.js 库 + CLI。
