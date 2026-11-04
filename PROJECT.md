@@ -2,7 +2,7 @@
 
 > 版本：v0.2  
 > 日期：2026-11-03  
-> 状态：M2-A/M2-B/M2-C 已实现；130 个 curated、168 条评测用例；MCP 已加入 v0.4.0  
+> 状态：M2-A/M2-B/M2-C 已实现；160 个 curated、198 条评测用例；MCP 已加入 v0.4.0，0.5.0 扩展覆盖  
 > 关联项目：qbot  
 > 原始草案：`../china-nbs-project-proposal.md`（v0.1，保留作历史记录）
 
@@ -367,7 +367,7 @@ https://data.stats.gov.cn/dg/website/publicrelease/web/external
 - 最高分 ≥ 30 → `AMBIGUOUS`，返回前 3；
 - 否则 `NOT_FOUND`。
 
-已内置 curated **130 个**，覆盖：
+已内置 curated **160 个**，覆盖：
 
 - 国民经济核算：全国/分省/城市 GDP、建筑业总产值
 - 人口就业：人口、出生率/死亡率/自然增长率、总抚养比、城镇调查失业率、31 大城市失业率、青年失业率、平均工资
@@ -602,11 +602,11 @@ node dist/cli.js catalog --code 3 --depth 2
 
 **M2-B（指标覆盖）✅ 已完成：**
 
-- curated 从 10 个扩到 **130 个**
+- curated 从 10 个扩到 **160 个**
 - 覆盖社零、固投、收入、消费、财政、粮食、进出口、工业、失业率、房地产、建筑业、能源、交通邮电、金融、教育、卫生、环境、分行业 PPI、网上零售等
 - 新增 36 个主要城市年度（`code=8`）和城市 GDP curated
 - 通用解析：完整名称匹配、限定词评分、分类树提示词扩展、叶子 n-gram 排序
-- 评测集 **168 条**：159 条 curated + 9 条 fallback；curated 100%，fallback top-1 9/9
+- 评测集 **198 条**：189 条 curated + 9 条 fallback；curated 100%，fallback top-1 9/9
 - 新增 7 个测试（M2-B 结束时总计 53 个）
 
 **M2-C 已完成：**
@@ -652,9 +652,9 @@ node dist/cli.js catalog --code 3 --depth 2
 - 错误处理：403、500、非 JSON、业务失败
 - 缓存：同 key 只请求一次
 - 类型/参数：catalog 非法 code、NOT_FOUND、AMBIGUOUS
-- 覆盖率：159 条 curated + 9 条 fallback 用例
+- 覆盖率：189 条 curated + 9 条 fallback 用例
 
-当前：58 个测试 + 159 条 curated 评测全部通过；9 条 fallback 在线 top-1 9/9。
+当前：62 个测试 + 189 条 curated 评测全部通过；9 条 fallback 在线 top-1 9/9。
 
 ### 10.2 真实接口冒烟
 
@@ -679,12 +679,12 @@ node dist/cli.js catalog --code 3 --depth 2
 
 ```text
 curated fast path: 159 cases
-top-1: 159/159 (100.0%)
-top-3: 159/159 (100.0%)
+top-1: 189/189 (100.0%)
+top-3: 189/189 (100.0%)
 
 live resolver: 168 cases
-top-1: 168/168 (100.0%)
-top-3: 168/168 (100.0%)
+top-1: 198/198 (100.0%)
+top-3: 198/198 (100.0%)
 fallback: 9/9
 ```
 
@@ -747,9 +747,9 @@ fallback: 9/9
 - 时间序列覆盖最近 10 年
 - 分省数据覆盖 34 个地区（含港澳台）；主要城市年度覆盖 36 个
 - `AMBIGUOUS` 能给出可选候选，而不是瞎猜
-- 覆盖率：130 个 curated；159 条 curated + 9 条 fallback 评测；curated 100%，整体在线 100.0%
+- 覆盖率：160 个 curated；189 条 curated + 9 条 fallback 评测；curated 100%，整体在线 100.0%
 
-准确率如何测：`scripts/eval-cases.ts` 维护 168 条用例，标注期望 `cid:indicId` 或 curated key，统计 top-1/top-3；其中 9 条专门测非 curated 的搜索/分类树。新增指标必须补用例。
+准确率如何测：`scripts/eval-cases.ts` 维护 198 条用例，标注期望 `cid:indicId` 或 curated key，统计 top-1/top-3；其中 9 条专门测非 curated 的搜索/分类树。新增指标必须补用例。
 
 ### 13.2 性能指标
 
@@ -896,9 +896,9 @@ GET  /getAllProvince
 | 分省年度/季度/月度       | ✅                      |
 | 主要城市年度（36 个）    | ✅                      |
 | CPI 4 分片合并           | ✅                      |
-| 130 个 curated           | ✅                      |
+| 160 个 curated           | ✅                      |
 | 159 curated + 9 fallback | ✅                      |
-| 58 个测试                | ✅                      |
+| 62 个测试                | ✅                      |
 | 接口契约文档 + fixtures  | ✅                      |
 | 通用分片发现             | ✅ 0.3.0                |
 | compare 多指标           | ✅ 明确只做单指标多地区 |

@@ -1,6 +1,6 @@
 {
   "name": "china-nbs",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Query China's National Bureau of Statistics data release database with one tool.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -41,6 +41,7 @@
     "eval": "node --import tsx scripts/eval.ts",
     "eval:live": "node --import tsx scripts/eval.ts --live",
     "coverage": "node --import tsx scripts/coverage-report.ts",
+    "coverage:matrix": "node --import tsx scripts/coverage-matrix.ts",
     "mcp": "node dist/mcp.js",
     "prepublishOnly": "npm run build && npm test"
   },

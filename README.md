@@ -14,11 +14,11 @@
 - **一个入口**：`query()` 自动完成关键词搜索、分类树导航、指标解析、时间序列查询、分片合并。
 - **四个动作**：`search`（最新数据）、`series`（时间序列）、`compare`（分省对比）、`catalog`（分类树）。
 - **MCP**：`china-nbs mcp` 通过 stdio 暴露 4 个工具，可直接接入 Claude Desktop、Cursor 等 MCP 客户端。
-- **覆盖广**：全国、分省、主要城市；年度、季度、月度；130 个常用指标 curated，其他走分类树兜底。
+- **覆盖广**：全国、分省、主要城市；年度、季度、月度；160 个常用指标 curated，其他走分类树兜底。
 - **歧义可控**：候选分数接近时返回 `AMBIGUOUS` + 候选列表，可用 `indicatorId` 精确回查，不猜错误指标。
 - **口径优先**：默认优先总量/亿元；识别“增速、指数、人均、贡献率、累计、当季、不变价”等口径。
 - **分片合并**：自动识别分类树里的跨年份分片（不只 CPI），按时间范围拆分请求、合并、去重、排序。
-- **可评测**：168 条评测用例（159 curated + 9 fallback），`npm run eval` 离线测 curated，`npm run eval:live` 测真实解析。
+- **可评测**：198 条评测用例（189 curated + 9 fallback），`npm run eval` 离线测 curated，`npm run eval:live` 测真实解析。
 - **零运行时依赖**：Node 22+ 原生 `fetch`；TypeScript 编写，ESM + CJS。
 - **对上游友好**：默认串行限流（2 秒间隔）、TTL+LRU 缓存、in-flight 去重、超时、一次重试、NOT_FOUND 负缓存和熔断器。
 - **可接代理**：库支持 `fetchImpl` / `dispatcher` 注入；CLI 支持 `--proxy`（可选安装 `undici`）。
@@ -261,9 +261,9 @@ if (ambiguous.error?.code === 'AMBIGUOUS') {
 | 主要城市年度（code=8）      | ✅（内置 36 个主要城市；GDP curated，其他走分类树） |
 | 主要城市月度价格（code=7）  | ⏳ 36/70 城市汇总价格指数，不是单城市数据           |
 | 港澳台 / 部门 / 国际 / 普查 | ⏳ 后续                                             |
-| MCP server                  | ✅ 内置（需可选安装 SDK/zod）                        |
+| MCP server                  | ✅ 内置（需可选安装 SDK/zod）                       |
 
-常用指标 curated 共 **130 个**，覆盖 GDP、CPI、PPI、人口与人口结构、社零、固投、收入、消费、财政、粮食、进出口、工业与工业产品产量、失业率、房地产、建筑业、能源、交通邮电、金融（含月度 M2/M1）、教育、卫生、环境、分行业 PPI、网上零售等。
+常用指标 curated 共 **160 个**，覆盖 GDP、CPI、PPI、人口与人口结构、社零、固投、收入、消费、财政、粮食、进出口、工业与工业产品产量、失业率、房地产、建筑业、能源、交通邮电、金融（含月度 M2/M1）、教育、卫生、环境、分行业 PPI、农产品生产价格、网上零售等。
 
 ## 评测
 
@@ -272,7 +272,7 @@ npm run eval        # 离线：只测 curated 快速路径，不请求上游
 npm run eval:live   # 在线：curated + search/tree 的真实解析
 ```
 
-当前评测集 **168 条**：159 条 curated 用例 + 9 条 fallback 用例，覆盖全国/分省/主要城市、年/季/月、总量/累计/增速等口径。离线 curated 为 **159/159 top-1**；在线整体 **168/168 top-1（100.0%）**，其中 fallback 为 **9/9**。评测集在 `scripts/eval-cases.ts`，新增指标时请同时补用例。
+当前评测集 **198 条**：189 条 curated 用例 + 9 条 fallback 用例，覆盖全国/分省/主要城市、年/季/月、总量/累计/增速等口径。离线 curated 为 **189/189 top-1**；在线整体 **198/198 top-1（100.0%）**，其中 fallback 为 **9/9**。评测集在 `scripts/eval-cases.ts`，新增指标时请同时补用例。
 
 ## 数据口径
 

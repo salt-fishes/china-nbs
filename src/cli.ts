@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { query, render } from './index.js';
 import type { Format, QueryOptions, QueryResult } from './types.js';
 
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 
 const HELP = `china-nbs ${VERSION}
 用一句关键词查询国家统计局官方数据。

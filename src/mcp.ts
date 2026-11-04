@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { query as defaultQuery } from './index.js';
 import type { QueryOptions, QueryResult } from './types.js';
 
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 
 export type QueryFn = (options: QueryOptions) => Promise<QueryResult>;
 
