@@ -2,7 +2,7 @@
 
 > 版本：v0.2  
 > 日期：2026-11-03  
-> 状态：M2-A/M2-B/M2-C 已实现；130 个 curated、168 条评测用例；v0.3.0 已发布  
+> 状态：M2-A/M2-B/M2-C 已实现；130 个 curated、168 条评测用例；MCP 已加入 v0.4.0  
 > 关联项目：qbot  
 > 原始草案：`../china-nbs-project-proposal.md`（v0.1，保留作历史记录）
 
@@ -619,13 +619,12 @@ node dist/cli.js catalog --code 3 --depth 2
 - 港澳台/部门/国际/普查数据仍受上游可用性限制，未纳入
 - 新增 5 个测试（总计 58 个）
 
-### M3：v0.3 开源发布（1–2 天）
+### M3：v0.3 / v0.4 开源发布
 
-- MCP server（可选依赖/独立包）
-- npm 发布、provenance、GitHub Release
-- README 完整版、示例、徽章
-- Issue/PR 模板
-- 月度 smoke cron
+- ✅ MCP server：`china-nbs mcp` / `china-nbs-mcp`，4 个工具，stdio transport
+- ✅ npm 发布（0.3.0 已发布；0.4.0 待发布）
+- ✅ README 完整版、示例、徽章
+- ⏳ provenance / GitHub Release / Issue 模板 / 月度 smoke cron
 
 ### M4：v1.0 稳定版
 

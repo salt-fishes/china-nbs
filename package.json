@@ -1,6 +1,6 @@
 {
   "name": "china-nbs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Query China's National Bureau of Statistics data release database with one tool.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -15,7 +15,8 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "china-nbs": "./dist/cli.js"
+    "china-nbs": "./dist/cli.js",
+    "china-nbs-mcp": "./dist/mcp.js"
   },
   "files": [
     "dist",
@@ -40,6 +41,7 @@
     "eval": "node --import tsx scripts/eval.ts",
     "eval:live": "node --import tsx scripts/eval.ts --live",
     "coverage": "node --import tsx scripts/coverage-report.ts",
+    "mcp": "node dist/mcp.js",
     "prepublishOnly": "npm run build && npm test"
   },
   "keywords": [
@@ -50,7 +52,8 @@
     "gdp",
     "cpi",
     "data",
-    "cli"
+    "cli",
+    "mcp"
   ],
   "author": "salt-fishes",
   "license": "MIT",
@@ -67,19 +70,29 @@
     "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
-    "undici": ">=6"
+    "@modelcontextprotocol/sdk": ">=1.0.0",
+    "undici": ">=6",
+    "zod": ">=3.25"
   },
   "peerDependenciesMeta": {
+    "@modelcontextprotocol/sdk": {
+      "optional": true
+    },
     "undici": {
+      "optional": true
+    },
+    "zod": {
       "optional": true
     }
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@types/node": "^24.0.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.0",
+    "zod": "^4.6.7"
   }
 }

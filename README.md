@@ -13,6 +13,7 @@
 
 - **一个入口**：`query()` 自动完成关键词搜索、分类树导航、指标解析、时间序列查询、分片合并。
 - **四个动作**：`search`（最新数据）、`series`（时间序列）、`compare`（分省对比）、`catalog`（分类树）。
+- **MCP**：`china-nbs mcp` 通过 stdio 暴露 4 个工具，可直接接入 Claude Desktop、Cursor 等 MCP 客户端。
 - **覆盖广**：全国、分省、主要城市；年度、季度、月度；130 个常用指标 curated，其他走分类树兜底。
 - **歧义可控**：候选分数接近时返回 `AMBIGUOUS` + 候选列表，可用 `indicatorId` 精确回查，不猜错误指标。
 - **口径优先**：默认优先总量/亿元；识别“增速、指数、人均、贡献率、累计、当季、不变价”等口径。
@@ -134,6 +135,54 @@ npx china-nbs search 人口 --period year --json
 npx china-nbs search 人口 --period year --select 1
 ```
 
+## MCP
+
+MCP server 通过 stdio 暴露 4 个工具：`nbs_search`、`nbs_series`、`nbs_compare`、`nbs_catalog`。
+
+MCP 依赖是可选的，核心包仍然零运行时依赖：
+
+```bash
+npm install -g china-nbs @modelcontextprotocol/sdk zod
+china-nbs mcp
+```
+
+或者项目内安装：
+
+```bash
+npm install china-nbs @modelcontextprotocol/sdk zod
+npx china-nbs mcp
+```
+
+Claude Desktop / Cursor 配置（stdio）：
+
+```json
+{
+  "mcpServers": {
+    "china-nbs": {
+      "command": "china-nbs",
+      "args": ["mcp"]
+    }
+  }
+}
+```
+
+如果使用 `npx`：
+
+```json
+{
+  "mcpServers": {
+    "china-nbs": {
+      "command": "npx",
+      "args": ["-y", "china-nbs", "mcp"]
+    }
+  }
+}
+```
+
+`npx` 不会自动安装可选 peer 依赖；建议先全局安装 `@modelcontextprotocol/sdk` 和 `zod`，或使用项目内安装。
+
+工具返回结构化 `QueryResult` 的 JSON 文本；`AMBIGUOUS` 会作为 tool error 返回，客户端应展示候选并用 `indicatorId` 重查。详见 [docs/mcp.md](docs/mcp.md)。
+
 ## API
 
 ### `query(options): Promise<QueryResult>`
@@ -199,7 +248,7 @@ if (ambiguous.error?.code === 'AMBIGUOUS') {
 }
 ```
 
-## 支持范围（v0.2）
+## 支持范围（v0.4）
 
 | 数据                        | 状态                                                |
 | --------------------------- | --------------------------------------------------- |
@@ -212,7 +261,7 @@ if (ambiguous.error?.code === 'AMBIGUOUS') {
 | 主要城市年度（code=8）      | ✅（内置 36 个主要城市；GDP curated，其他走分类树） |
 | 主要城市月度价格（code=7）  | ⏳ 36/70 城市汇总价格指数，不是单城市数据           |
 | 港澳台 / 部门 / 国际 / 普查 | ⏳ 后续                                             |
-| MCP server                  | ⏳ 计划 v0.4                                        |
+| MCP server                  | ✅ 内置（需可选安装 SDK/zod）                        |
 
 常用指标 curated 共 **130 个**，覆盖 GDP、CPI、PPI、人口与人口结构、社零、固投、收入、消费、财政、粮食、进出口、工业与工业产品产量、失业率、房地产、建筑业、能源、交通邮电、金融（含月度 M2/M1）、教育、卫生、环境、分行业 PPI、网上零售等。
 

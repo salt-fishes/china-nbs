@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0 (2026-11-04)
+
+新增 MCP server，核心包继续保持零运行时依赖。
+
+- 新增 `china-nbs mcp` 子命令和 `china-nbs-mcp` 独立入口（stdio transport）
+- 暴露 4 个 MCP 工具：`nbs_search`、`nbs_series`、`nbs_compare`、`nbs_catalog`
+- `@modelcontextprotocol/sdk` 与 `zod` 作为可选 peer 依赖；未安装时 CLI 给出安装提示
+- 支持 Claude Desktop / Cursor 的 stdio 配置
+- 新增 `docs/mcp.md`，补充工具参数、返回格式和 `AMBIGUOUS` 处理
+- 测试从 58 个增加到 **62 个**（新增 MCP in-memory transport 测试）
+
 ## 0.3.0 (2026-11-04)
 
 首个公开发布版本，补齐 M2-C 工程项。

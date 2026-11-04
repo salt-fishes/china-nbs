@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { query, render } from './index.js';
 import type { Format, QueryOptions, QueryResult } from './types.js';
 
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 
 const HELP = `china-nbs ${VERSION}
 用一句关键词查询国家统计局官方数据。
@@ -13,6 +13,7 @@ const HELP = `china-nbs ${VERSION}
   china-nbs series <指标> [选项]
   china-nbs compare <指标> --regions 广东,江苏,浙江 [选项]
   china-nbs catalog [选项]
+  china-nbs mcp
 
 示例：
   china-nbs search GDP --period year --region 全国
@@ -23,6 +24,7 @@ const HELP = `china-nbs ${VERSION}
   china-nbs compare GDP --regions 广东,江苏,浙江 --year 2025
   china-nbs compare GDP --regions 广东,江苏,浙江 --period quarter --start 2025Q1 --end 2025Q4
   china-nbs catalog --code 3 --depth 2
+  china-nbs mcp
   china-nbs search CPI --json
 
 选项：
@@ -257,8 +259,17 @@ export async function run(argv: string[]): Promise<number> {
   }
 
   if (parsed.command === 'mcp') {
-    process.stderr.write('MCP server 计划在 v0.3 提供；当前版本请使用 CLI 或 Node API。\n');
-    return 1;
+    try {
+      const { startMcpServer } = await import('./mcp.js');
+      await startMcpServer();
+      return 0;
+    } catch (error) {
+      if (error instanceof Error && 'code' in error && error.code === 'ERR_MODULE_NOT_FOUND') {
+        process.stderr.write('MCP 依赖未安装。请运行：npm install @modelcontextprotocol/sdk zod\n');
+        return 1;
+      }
+      throw error;
+    }
   }
 
   if (parsed.proxy) {
