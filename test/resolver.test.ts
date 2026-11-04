@@ -163,15 +163,29 @@ describe('resolveIndicator', () => {
     expect(outcome.indicator.unit).toBe('万人');
   });
 
-  it('does not use a curated entry when the query adds a measure', async () => {
+  it('uses the curated GDP index entry when the query adds a measure', async () => {
     const provider = new StaticProvider();
-    provider.searchResult = searchFixture('search-gdp.json');
     const outcome = await resolveIndicator(provider, { query: 'GDP指数' }, 'year', national);
     expect(outcome.kind).toBe('resolved');
     if (outcome.kind !== 'resolved') return;
-    expect(outcome.indicator.source).toBe('search');
+    expect(outcome.indicator.source).toBe('curated');
     expect(outcome.indicator.name).toContain('指数');
     expect(outcome.indicator.displayName).toContain('上年=100');
+  });
+
+  it('falls through to search for a non-curated GDP measure', async () => {
+    const provider = new StaticProvider();
+    provider.searchResult = searchFixture('search-gdp.json');
+    const outcome = await resolveIndicator(
+      provider,
+      { query: '资本形成总额对国内生产总值增长贡献率' },
+      'year',
+      national,
+    );
+    expect(outcome.kind).toBe('resolved');
+    if (outcome.kind !== 'resolved') return;
+    expect(outcome.indicator.source).toBe('search');
+    expect(outcome.indicator.name).toContain('贡献率');
   });
 
   it('falls back to the catalog tree when search has no usable result', async () => {
@@ -181,9 +195,9 @@ describe('resolveIndicator', () => {
       { id: 'gdp-cat', name: '国内生产总值', level: 3, isLeaf: true, parentId: 'root' },
     ];
     provider.indicators['gdp-cat'] = [
-      indicator('gdp-ind', 'gdp-cat', '国内生产总值', '国内生产总值 (亿元)', '亿元'),
+      indicator('gdp-ind', 'gdp-cat', '国内生产总值贡献率', '国内生产总值贡献率 (%)', '%'),
     ];
-    const outcome = await resolveIndicator(provider, { query: 'GDP指数' }, 'year', national);
+    const outcome = await resolveIndicator(provider, { query: 'GDP贡献率' }, 'year', national);
     expect(outcome.kind).toBe('resolved');
     if (outcome.kind !== 'resolved') return;
     expect(outcome.indicator.source).toBe('tree');
