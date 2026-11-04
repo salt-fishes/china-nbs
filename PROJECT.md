@@ -654,7 +654,7 @@ node dist/cli.js catalog --code 3 --depth 2
 - 类型/参数：catalog 非法 code、NOT_FOUND、AMBIGUOUS
 - 覆盖率：189 条 curated + 9 条 fallback 用例
 
-当前：62 个测试 + 189 条 curated 评测全部通过；9 条 fallback 在线 top-1 9/9。
+当前：63 个测试 + 189 条 curated 评测全部通过；9 条 fallback 在线 top-1 9/9。
 
 ### 10.2 真实接口冒烟
 
@@ -898,7 +898,7 @@ GET  /getAllProvince
 | CPI 4 分片合并           | ✅                      |
 | 160 个 curated           | ✅                      |
 | 159 curated + 9 fallback | ✅                      |
-| 62 个测试                | ✅                      |
+| 63 个测试                | ✅                      |
 | 接口契约文档 + fixtures  | ✅                      |
 | 通用分片发现             | ✅ 0.3.0                |
 | compare 多指标           | ✅ 明确只做单指标多地区 |

@@ -121,4 +121,17 @@ describe('NbsClient', () => {
 
     await expect(client.request<{ ok: boolean }>('/query')).resolves.toEqual({ ok: true });
   });
+
+  it('maps redirect loops to UPSTREAM_BLOCKED without retrying', async () => {
+    const fetchImpl = vi.fn(async () => {
+      throw new TypeError('fetch failed', { cause: new Error('redirect count exceeded') });
+    }) as unknown as typeof fetch;
+    const client = new NbsClient({ fetchImpl, minIntervalMs: 0, jitterMs: 0, maxRetries: 2 });
+
+    await expect(client.request('/query')).rejects.toMatchObject({
+      code: 'UPSTREAM_BLOCKED',
+      retryable: false,
+    });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
 });

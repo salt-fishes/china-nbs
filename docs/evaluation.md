@@ -99,7 +99,7 @@ fallback: 9/9
 | 时间序列 | 2 个 curated 分片指标 + 通用分片发现 | 中高；分类树叶子带年份范围时可自动合并 |
 | 原始指标总量 | 官方约 7.6 万指标 | <0.2%；本项目不按原始指标宣称全覆盖 |
 | 评测可信度 | curated 189/189；fallback 9/9（小样本） | 中；评测集是自建回归集，不是独立抽样 |
-| 工程质量 | 62 个测试、lint/typecheck/build/smoke、负缓存/熔断/代理注入、MCP server | 高 |
+| 工程质量 | 63 个测试、lint/typecheck/build/smoke、负缓存/熔断/代理注入、MCP server | 高 |
 
 综合判断：
 

@@ -267,6 +267,17 @@ export class NbsClient {
         if (options.signal?.aborted) {
           throw new NbsError('ABORTED', '查询已取消', { retryable: false });
         }
+        if (
+          error instanceof TypeError &&
+          error.cause instanceof Error &&
+          /redirect/i.test(error.cause.message)
+        ) {
+          throw new NbsError('UPSTREAM_BLOCKED', '国家统计局接口重定向循环', {
+            retryable: false,
+            hint: '可能是 WAF 或接口临时变更；请稍后重试，不要循环请求。',
+            details: { cause: error.cause.message },
+          });
+        }
         throw error;
       }
 
